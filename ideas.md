@@ -6,3 +6,4 @@ $ npm install -g http-server
 $ http-server
 # se connecter à http://localhost:8080
 ```
+- installer l'extension vscode "todo tree" pour suivre les TODO
