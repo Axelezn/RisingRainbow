@@ -7,7 +7,7 @@ class GameScene extends Phaser.Scene{
 let config = {
     width:800,
     height:500,
-    backgroundColor : '#4488AA',
+    backgroundColor : '#850606', // '#4488AA',
     type:Phaser.AUTO,
 }
 const game = new Phaser.Game(config);
