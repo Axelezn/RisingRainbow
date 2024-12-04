@@ -1,7 +1,7 @@
 //alert("Script Initialisé")
 class GameScene extends Phaser.Scene{
     preload() {
-        this.load.image("tile", "assets/tile")
+        this.load.image("tile", "src/assets/tile.png")
     }
 }
 let config = {
