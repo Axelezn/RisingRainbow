@@ -2,7 +2,8 @@
 class GameScene extends Phaser.Scene{
     //On load les assets ici
     preload() {
-        this.load.image("tile", "assets/tile.png");
+        //this.load.image("tile", "assets/tile.png");
+        this.load.image('tile', )
         this.load.atlas("dino", "assets/rondoudou@2x.png")
     }
     // Créer l'entité de jeu 
