@@ -15,6 +15,16 @@ class GameScene extends Phaser.Scene {
         this.load.atlas("dino", "assets/Démon.png", "assets/atlas/sprite.json");
         this.load.spritesheet("bird", "assets/bird.png", { frameWidth: 150, frameHeight: 108 });
         this.load.audioSprite("sfx", "assets/fx_mixdown.json", ["assets/fx_mixdown.mp3", "assets/fx_mixdown.ogg"])
+        
+        // Parallaxe
+
+        this.load.image('nuage1', "assets/Sol/Sol démon/1x/Nuage 1.png");
+        this.load.image('nuage2', "assets/Sol/Sol démon/1x/Nuage 2.png");
+        this.load.image('nuage3', "assets/Sol/Sol démon/1x/Nuage 3.png");
+        this.load.image('nuage4', "assets/Sol/Sol démon/1x/Nuage 4.png");
+        this.load.image('nuage5', "assets/Sol/Sol démon/1x/Nuage 5.png");
+
+
     }
     // create game entities
     create() {
@@ -57,6 +67,38 @@ class GameScene extends Phaser.Scene {
         this.physics.add.collider(this.plants, this.ground);
         this.cursors = this.input.keyboard.createCursorKeys();
         // console.log(this.cursors);
+
+        // Parallaxe
+        this.nuage1 = this.game.add.tileSprite(0,
+            this.game.height - this.game.cache.getImage('nuage1').height,
+            this.game.width,
+            this.game.cache.getImage("nuage1").height,
+            'nuage1'
+        );
+        this.nuage2 = this.game.add.tileSprite(0,
+            this.game.height - this.game.cache.getImage('nuage2').height,
+            this.game.width,
+            this.game.cache.getImage("nuage2").height,
+            'nuage2'
+        );
+        this.nuage3 = this.game.add.tileSprite(0, 
+            this.game.height - this.game.cache.getImage('nuage3').height,
+            this.game.width,
+            this.game.cache.getImage('nuage3').height,
+            'nuage3'
+        );
+        this.nuage4 = this.game.add.tileSprite(0, 
+            this.game.height - this.game.cache.getImage('nuage4').height,
+            this.game.width,
+            this.game.cache.getImage('nuage4').height,
+            'nuage4'
+        );
+        this.nuage5 = this.game.add.tileSprite(0,
+            this.game.height - this.game.cache.getImage('nuage5').height,
+            this.game.width,
+            this.game.cache.getImage('nuage5').height,
+            'nuage5'
+        );
     }
     gameOver() {
         console.log("Game Over");
@@ -257,7 +299,7 @@ class GameScene extends Phaser.Scene {
 
     }
     addTile(x, y) {
-        this.ground.create(x, y, "tile").setOrigin(0, 0);
+        this.ground.create(x, y, "nuage1").setOrigin(0, 0);
     }
 }
 

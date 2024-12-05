@@ -6,14 +6,14 @@ class TitleScene extends Phaser.Scene {
     }
     create() {
         // alert("Hello from Title");
-        const Title = this.add.text(400, 200, "START NEW GAME", {
+        const Title = this.add.text(400, 200, "Démarrer une nouvelle partie", {
             fontSize: 45,
             fontFamily: "Arial Black",
             stroke: "gray",
             strokeThickness: 5
         })
         Title.setOrigin(0.5, 0.5);
-        const spaceText = this.add.text(400, 250, "PRESS SPACE TO START", {
+        const spaceText = this.add.text(400, 250, "Espace pour une nouvelle partie", {
             fontSize: 22,
             fontFamily: "Arial Black",
             stroke: "gray",

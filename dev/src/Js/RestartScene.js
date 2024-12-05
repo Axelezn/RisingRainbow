@@ -12,7 +12,7 @@ class RestartScene extends Phaser.Scene {
             strokeThickness: 5
         })
         Title.setOrigin(0.5, 0.5);
-        const spaceText = this.add.text(400, 250, "PRESS SPACE TO RESTART", {
+        const spaceText = this.add.text(400, 250, "Espace pour recommencer !", {
             fontSize: 22,
             fontFamily: "Arial Black",
             stroke: "gray",
