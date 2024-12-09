@@ -2,7 +2,7 @@ class TitleScene extends Phaser.Scene {
     preload() {
         this.tileWidth = 64 ;
         this.tileHeight = 64;
-        this.load.image('nuage1', "assets/parallaxes/Sol/sol_demon/nuage_1.png");
+        this.load.image('nuage1', "assets/parallaxes/Sol/sol_demon/1x/nuage_1.png");
     }
     create() {
         // alert("Hello from Title");
