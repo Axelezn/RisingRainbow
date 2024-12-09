@@ -11,7 +11,7 @@ class GameScene extends Phaser.Scene {
     }
     // load assets
     preload() {
-        images={
+         const images={
             "nuage1":"assets/parallaxes/Sol/Sol_demon/1x/Nuage_1.png",
             "nuage2":"assets/parallaxes/Sol/Sol_demon/1x/Nuage_2.png",
             "nuage3":"assets/parallaxes/Sol/Sol_demon/1x/Nuage_3.png",
