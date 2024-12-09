@@ -11,18 +11,31 @@ class GameScene extends Phaser.Scene {
     }
     // load assets
     preload() {
+        images={
+            "nuage1":"assets/parallaxes/Sol/Sol_demon/1x/Nuage_1.png",
+            "nuage2":"assets/parallaxes/Sol/Sol_demon/1x/Nuage_2.png",
+            "nuage3":"assets/parallaxes/Sol/Sol_demon/1x/Nuage_3.png",
+            "nuage4":"assets/parallaxes/Sol/Sol_demon/1x/Nuage_4.png",
+            "nuage5":"assets/parallaxes/Sol/Sol_demon/1x/Nuage_5.png",
+        }
         this.load.image("plant", "assets/cactus.png");
         this.load.atlas("dino", "assets/Démon.png", "assets/atlas/sprite.json");
         this.load.spritesheet("bird", "assets/bird.png", { frameWidth: 150, frameHeight: 108 });
         this.load.audioSprite("sfx", "assets/fx_mixdown.json", ["assets/fx_mixdown.mp3", "assets/fx_mixdown.ogg"])
         
+        //load all images
+        for (const id in images) {
+            const fichier = images[id];
+            this.load.image(id, fichier);
+        }
+
         // Parallaxe
         
-        this.load.image('nuage1', "assets/parallaxes/Sol/sol_demon/nuage_1.png");
-        this.load.image('nuage2', "assets/parallaxes/Sol/sol_demon/nuage_1.png");
-        this.load.image('nuage3', "assets/parallaxes/Sol/sol_demon/nuage_1.png");
-        this.load.image('nuage4', "assets/parallaxes/Sol/sol_demon/nuage_1.png");
-        this.load.image('nuage5', "assets/parallaxes/Sol/sol_demon/nuage_1.png");
+        // this.load.image('nuage1', "assets/Sol/Sol démon/1x/Nuage 1.png");
+        // this.load.image('nuage2', "assets/Sol/Sol démon/1x/Nuage 2.png");
+        // this.load.image('nuage3', "assets/Sol/Sol démon/1x/Nuage 3.png");
+        // this.load.image('nuage4', "assets/Sol/Sol démon/1x/Nuage 4.png");
+        // this.load.image('nuage5', "assets/Sol/Sol démon/1x/Nuage 5.png");
 
 
     }
