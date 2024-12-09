@@ -15,7 +15,7 @@ class GameScene extends Phaser.Scene {
             "nuage1":"assets/parallaxes/Sol/Sol_demon/1x/Nuage_1.png",
             "nuage2":"assets/parallaxes/Sol/Sol_demon/1x/Nuage_2.png",
             "nuage3":"assets/parallaxes/Sol/Sol_demon/1x/Nuage_3.png",
-            "nuage4":"assets/parallaxes/ol/Sol_demon/1x/Nuage_4.png",
+            "nuage4":"assets/parallaxes/Sol/Sol_demon/1x/Nuage_4.png",
             "nuage5":"assets/parallaxes/Sol/Sol_demon/1x/Nuage_5.png",
         }
         this.load.image("plant", "assets/cactus.png");
