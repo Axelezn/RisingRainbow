@@ -3,6 +3,6 @@ html, body{
     padding: 0;
 }
 canvas {
-    height: 90vh;
-    width: 50vw;
+    height: 100vh;
+    width: 100vw;
 }

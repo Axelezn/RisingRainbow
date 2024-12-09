@@ -1,8 +1,8 @@
 // alert("Hello From Script");
 class GameScene extends Phaser.Scene {
     init() {
-        this.tileWidth = 64;
-        this.tileHeight = 64;
+        this.tileWidth = 324;
+        this.tileHeight = 100;
         this.score = 0;
         this.birdSpeed = -350;
         this.birdDelay = 6000;
@@ -17,12 +17,12 @@ class GameScene extends Phaser.Scene {
         this.load.audioSprite("sfx", "assets/fx_mixdown.json", ["assets/fx_mixdown.mp3", "assets/fx_mixdown.ogg"])
         
         // Parallaxe
-
-        this.load.image('nuage1', "assets/Sol/Sol démon/1x/Nuage 1.png");
-        this.load.image('nuage2', "assets/Sol/Sol démon/1x/Nuage 2.png");
-        this.load.image('nuage3', "assets/Sol/Sol démon/1x/Nuage 3.png");
-        this.load.image('nuage4', "assets/Sol/Sol démon/1x/Nuage 4.png");
-        this.load.image('nuage5', "assets/Sol/Sol démon/1x/Nuage 5.png");
+        
+        this.load.image('nuage1', "assets/parallaxes/Sol/sol_demon/nuage_1.png");
+        this.load.image('nuage2', "assets/parallaxes/Sol/sol_demon/nuage_1.png");
+        this.load.image('nuage3', "assets/parallaxes/Sol/sol_demon/nuage_1.png");
+        this.load.image('nuage4', "assets/parallaxes/Sol/sol_demon/nuage_1.png");
+        this.load.image('nuage5', "assets/parallaxes/Sol/sol_demon/nuage_1.png");
 
 
     }
@@ -259,7 +259,11 @@ class GameScene extends Phaser.Scene {
         // create endless ground
         // console.log("I ran");
         this.updateGround()
-
+        this.nuage1.tilePosition.x -= 0.05;
+        this.nuage2.tilePosition.x -= 0.15;
+        this.nuage3.tilePosition.x -= 0.3;
+        this.nuage4.tilePosition.x -= 0.45;
+        this.nuage5.tilePosition.x -= 0.60;
     }
     handleInput() {
         // control

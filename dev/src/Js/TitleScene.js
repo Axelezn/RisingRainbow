@@ -1,23 +1,21 @@
 class TitleScene extends Phaser.Scene {
     preload() {
-        this.tileWidth = 64;
+        this.tileWidth = 64 ;
         this.tileHeight = 64;
-        this.load.image("tile", "assets/tile.png");
+        this.load.image('nuage1', "assets/parallaxes/Sol/sol_demon/nuage_1.png");
     }
     create() {
         // alert("Hello from Title");
         const Title = this.add.text(400, 200, "Démarrer une nouvelle partie", {
-            fontSize: 45,
+            fontSize: 30,
             fontFamily: "Arial Black",
-            stroke: "gray",
-            strokeThickness: 5
         })
         Title.setOrigin(0.5, 0.5);
         const spaceText = this.add.text(400, 250, "Espace pour une nouvelle partie", {
-            fontSize: 22,
+            fontSize: 20,
             fontFamily: "Arial Black",
             stroke: "gray",
-            strokeThickness: 5
+            strokeThickness: 0
         })
         spaceText.setOrigin(0.5, 0.5)
         this.ground = this.physics.add.group();
@@ -38,7 +36,7 @@ class TitleScene extends Phaser.Scene {
         // velocity
     }
     addTile(x, y) {
-        this.ground.create(x, y, "tile").setOrigin(0, 0);
+        this.ground.create(x, y, "nuage1").setOrigin(0, 0);
     }
 
 
