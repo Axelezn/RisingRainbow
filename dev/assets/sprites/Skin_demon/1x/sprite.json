@@ -1,0 +1,112 @@
+{
+    "textures": [
+        {
+            "image": "dev/assets/sprites/Skin démon/1x/Sprite sheet sans démarquation.png",
+            "format": "RGBA8888",
+            "size": {
+                "w": 5840,
+                "h": 6000
+            },
+            "scale": 1,
+            "animations": {
+                "dead": [
+                    {
+                        "filename": "Dead_01.png",
+                        "frame": { "x": 0, "y": 0, "w": 406, "h": 356 }
+                    },
+                    {
+                        "filename": "Dead_02.png",
+                        "frame": { "x": 64, "y": 0, "w": 420, "h": 363 }
+                    }
+                ],
+                "idle": [
+                    {
+                        "filename": "Idle_01.png",
+                        "frame": { "x": 0, "y": 64, "w": 176, "h": 264 }
+                    },
+                    {
+                        "filename": "Idle_02.png",
+                        "frame": { "x": 0, "y": 128, "w": 192, "h": 2096 }
+                    }
+                ],
+                "jump": [
+                    {
+                        "filename": "Jump_01.png",
+                        "frame": { "x": 176, "y": 1424, "w": 720, "h": 664 }
+                    },
+                    {
+                        "filename": "Jump_02.png",
+                        "frame": { "x": 912, "y": 952, "w": 728 , "h": 1080 }
+                    },
+					{
+						"filename": "Jump_03.png",
+                        "frame": { "x": 1700, "y": 1424, "w": 720 , "h": 664 }}
+                ],
+                "run": [
+                    {
+                        "filename": "Run_01.png",
+                        "frame": { "x": 144, "y": 280, "w": 784, "h": 616 }
+                    },
+                    {
+                        "filename": "Run_02.png",
+                        "frame": { "x": 900, "y": 280, "w": 784, "h": 616 }
+                    }
+                ],
+				"run-évolution": [
+					{
+						"filename": "Run_EVO_01",
+						"frame" : { "x" : 128, "y": 4216, "w" : 632, "h": 744}
+					},
+					{
+						"filename" : "Run_EVO_02",
+						"frame" : { "x" : 768, "y": 4216, "w" : 632, "h": 744}
+					}
+				],
+				"Jump_évolution": [
+					{
+						"filename": "Jump_EVO_01",
+						"frame" :{"x" : 168, "y": 5432, "w" : 544, "h": 752}
+					},
+					{
+						"filename": "Jump_EVO_02",
+						"frame" :{"x" : 776, "y" : 5000, "w" : 536, "h" : 1184}
+					},
+					{
+						"filename": "Jump_EVO_03",
+						"frame" :{"x" : 1392, "y" : 5432, "w" : 544, "h" : 752}
+					}
+				],
+				"Kill_Unicorn" : [
+					{
+						"filename": "Kill_Unicorn_01",
+						"frame": {"x" : 120, "y" : 3576, "w" : 1448, "h" : 608}
+					},
+					{
+						"filename": "Kill_Unicorn_02",
+						"frame": {"x" : 1632, "y" : 3592, "w" : 1448, "h" : 608}
+					},
+					{
+						"filename": "Kill_Unicorn_03",
+						"frame": {"x" : 3216, "y" : 3600, "w" : 1448, "h" : 608}
+					}
+				],
+				"EAT_Unicorn" : [
+					{
+						"filename": "EAT_Unicorn_01",
+						"frame":{"x" : 128, "y" : 2752, "w" : 768, "h" : 656}
+					},
+					{
+						"filename" : "EAT_Unicorn_02",
+						"frame" :{"x" : 900, "y" : 2752, "w" : 768, "h" : 656}
+					},
+					{
+						"filename" : "EAT_Unicorn_03",
+						"frame" :{"x" : 1712, "y" : 2752, "w" : 768, "h" : 656}
+					}
+				]
+
+
+            }
+        }
+    ]
+}
