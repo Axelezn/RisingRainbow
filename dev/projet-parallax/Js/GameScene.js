@@ -3,6 +3,7 @@ class GameScene extends Phaser.Scene {
   init(data) {
     if (!data.level) data.level=1;
     this.level=data.level
+    console.log("level "+this.level);
     switch (this.level%3) {
       case 1 : // monde 1
         this.images = {
@@ -51,24 +52,34 @@ class GameScene extends Phaser.Scene {
 
   // create game entities
   create() {
-    const mult=100;
-    this.parallax4 = this.add.tileSprite(0, this.game.config.height-500, this.game.config.width*mult, 787, "parallax4").setScale(0.5).setAlpha(0.8);
-    this.parallax3 = this.add.tileSprite(0, this.game.config.height-350, this.game.config.width*mult, 529, "parallax3").setScale(0.5).setAlpha(0.8);
-    this.parallax2 = this.add.tileSprite(0, this.game.config.height-225, this.game.config.width*mult, 533, "parallax2").setScale(0.5).setAlpha(0.8);
-    this.parallax1 = this.add.tileSprite(0, this.game.config.height-140, this.game.config.width*mult, 280, "parallax1").setScale(0.5).setAlpha(0.8);
-    // this.parallax1.setOrigin(0,0);
-    // this.parallax2.setOrigin(0,0);
-    // this.parallax4.setOrigin(0,0);
+    this.mult=100;
+    this.parallax4 = this.add.tileSprite(-Phaser.Math.RND.integerInRange(100,this.game.config.width+100), this.game.config.height-700, this.game.config.width*this.mult, 787, "parallax4").setScale(0.5).setAlpha(0.8);
+    this.parallax3 = this.add.tileSprite(-Phaser.Math.RND.integerInRange(100,this.game.config.width+100), this.game.config.height-450, this.game.config.width*this.mult, 529, "parallax3").setScale(0.5).setAlpha(0.8);
+    this.parallax2 = this.add.tileSprite(-Phaser.Math.RND.integerInRange(100,this.game.config.width+100), this.game.config.height-300, this.game.config.width*this.mult, 533, "parallax2").setScale(0.5).setAlpha(0.8);
+    this.parallax1 = this.add.tileSprite(-Phaser.Math.RND.integerInRange(100,this.game.config.width+100), this.game.config.height-150, this.game.config.width*this.mult, 280, "parallax1").setScale(0.5).setAlpha(0.8);
+    this.parallax1.setOrigin(0,0);
+    this.parallax2.setOrigin(0,0);
+    this.parallax3.setOrigin(0,0);
+    this.parallax4.setOrigin(0,0);
     this.parallax1.setScrollFactor(0.667);
     this.parallax2.setScrollFactor(0.444);
     this.parallax3.setScrollFactor(0.296);
     this.parallax4.setScrollFactor(0.197);
     this.player = this.physics.add.sprite(100, 450, 'dude'); 
     this.cameras.main.startFollow(this.player,false,1,0.05,-300,150);
-    this.ground = this.add.tileSprite(0, this.game.config.height+50, this.game.config.width*mult, 311, 'ground');
-    this.player.setBounce(0.2);
+    this.ground = this.add.tileSprite(0, this.game.config.height+50, this.game.config.width*this.mult, 311, 'ground');
+    this.ground.setOrigin(0,0);
+    this.player.setBounce(0);
     this.physics.add.existing(this.ground, true);
     this.physics.add.collider(this.player, this.ground);
+
+    const spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+
+        spaceKey.on('down', (key, event) =>
+        {
+          if (this.player.body.touching.down) this.player.setVelocityY(-400);
+        });
+
   }
   
   gameOver() {
@@ -83,7 +94,7 @@ class GameScene extends Phaser.Scene {
 
   update() {
     this.player.setVelocityX(this.speed);
-    if (this.player.x>=this.game.config.width*(mult-1)){
+    if (this.player.x>=this.game.config.width*(this.mult-5)){
       //fin du niveau
       this.scene.pause();
       this.level++;
