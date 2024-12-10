@@ -11,20 +11,21 @@ class GameScene extends Phaser.Scene {
     }
     // load assets
     preload() {
-         const images={
-            "nuage1":"assets/parallaxes/Sol/Sol_demon/1x/Nuage_1.png",
-            "nuage2":"assets/parallaxes/Sol/Sol_demon/1x/Nuage_2.png",
-            "nuage3":"assets/parallaxes/Sol/Sol_demon/1x/Nuage_3.png",
-            "nuage4":"assets/parallaxes/Sol/Sol_demon/1x/Nuage_4.png",
-            "nuage5":"assets/parallaxes/Sol/Sol_demon/1x/Nuage_5.png",
-        }
-        this.load.image("plant", "assets/cactus.png");
-        
-        //load all images
-        for (const id in images) {
+        const images = {
+            nuage1: "assets/parallaxes/Sol/Sol_demon/1x/Nuage_1.png",
+            nuage2: "assets/parallaxes/Sol/Sol_demon/1x/Nuage_2.png",
+            nuage3: "assets/parallaxes/Sol/Sol_demon/1x/Nuage_3.png",
+            nuage4: "assets/parallaxes/Sol/Sol_demon/1x/Nuage_4.png",
+            nuage5: "assets/parallaxes/Sol/Sol_demon/1x/Nuage_5.png",
+          };
+          //load all images
+          for (const id in images) {
             const fichier = images[id];
             this.load.image(id, fichier);
+          }
+          this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
         }
+      
 
         // Parallaxe
         
@@ -35,7 +36,6 @@ class GameScene extends Phaser.Scene {
         // this.load.image('nuage5', "assets/Sol/Sol démon/1x/Nuage 5.png");
 
 
-    }
     // create game entities
     create() {
         this.ground = this.physics.add.group();
@@ -59,36 +59,19 @@ class GameScene extends Phaser.Scene {
         this.cursors = this.input.keyboard.createCursorKeys();
 
         // Parallaxe
-        this.nuage1 = this.game.add.tileSprite(0,
-            this.game.height - this.game.cache.getImage('nuage1').height - this.game.cache.getImage('nuage1').height,
-            this.game.width,
-            this.game.cache.getImage("nuage1").height,
-            'nuage1'
-        );
-        this.nuage2 = this.game.add.tileSprite(0,
-            this.game.height - this.game.cache.getImage('nuage2').height - this.game.cache.getImage('nuage1').height,
-            this.game.width,
-            this.game.cache.getImage("nuage2").height,
-            'nuage2'
-        );
-        this.nuage3 = this.game.add.tileSprite(0, 
-            this.game.height - this.game.cache.getImage('nuage3').height - this.game.cache.getImage('nuage1').height,
-            this.game.width,
-            this.game.cache.getImage('nuage3').height,
-            'nuage3'
-        );
-        this.nuage4 = this.game.add.tileSprite(0, 
-            this.game.height - this.game.cache.getImage('nuage4').height - this.game.cache.getImage('nuage1').height,
-            this.game.width,
-            this.game.cache.getImage('nuage4').height,
-            'nuage4'
-        );
-        this.nuage5 = this.game.add.tileSprite(0,
-            this.game.height - this.game.cache.getImage('nuage5').height - this.game.cache.getImage('nuage1').height,
-            this.game.width,
-            this.game.cache.getImage('nuage5').height,
-            'nuage5'
-        );
+        const mult=100;
+        this.nuage5 = this.add.tileSprite(0, this.game.config.height-787/2, this.game.config.width*mult, 787, "nuage5").setScale(0.5).setAlpha(0.8);
+        this.nuage3 = this.add.tileSprite(0, this.game.config.height-529/2, this.game.config.width*mult, 529, "nuage3").setScale(0.5).setAlpha(0.8);
+        this.nuage2 = this.add.tileSprite(0, this.game.config.height-280/2, this.game.config.width*mult, 280, "nuage2").setScale(0.5).setAlpha(0.8);
+        // this.nuage2.setOrigin(0,0);
+        // this.nuage3.setOrigin(0,0);
+        // this.nuage5.setOrigin(0,0);
+        this.nuage2.setScrollFactor(1);
+        this.nuage3.setScrollFactor(0.33);
+        this.nuage5.setScrollFactor(0.11);
+        this.player = this.physics.add.sprite(100, 450, 'dude');
+        this.cameras.main.startFollow(this.player);
+      
     }
     gameOver() {
         console.log("Game Over");
@@ -104,9 +87,9 @@ class GameScene extends Phaser.Scene {
             callback: () => {
                 this.score++;
                 this.scoreText.setText("SCORE: " + this.score);
-                if (this.score % 100 == 0) {
-                    this.sound.playAudioSprite("sfx", "ping");
-                }
+                // if (this.score % 100 == 0) {
+                //     this.sound.playAudioSprite("sfx", "ping");
+                // }
             },
             callbackScope: this
         })
@@ -116,11 +99,7 @@ class GameScene extends Phaser.Scene {
         // create endless ground
         // console.log("I ran");
         this.updateGround()
-        this.nuage5.tilePosition.x -= 0.05;
-        this.nuage4.tilePosition.x -= 0.15;
-        this.nuage3.tilePosition.x -= 0.3;
-        this.nuage2.tilePosition.x -= 0.45;
-        this.nuage1.tilePosition.x -= 0.60;
+        this.player.setVelocityX(160);
     }
     updateGround() {
         let lastBlock = this.ground.getLast(true);
@@ -137,21 +116,21 @@ class GameScene extends Phaser.Scene {
         }
     }
     addBase(x) {
-        let tileNeeded = Math.ceil((this.sys.game.config.width - x) / this.tileWidth);
+        let tileNeeded = Math.ceil(
+          (this.sys.game.config.width - x) / this.tileWidth
+        );
         let y = this.sys.game.config.height - this.tileHeight;
         for (let i = 0; i < tileNeeded; i++) {
-            this.addTile(x - 10 + (i * this.tileWidth), y);
+          this.addTile(x - 10 + i * this.tileWidth, y);
         }
         // velocity
         this.ground.children.iterate((child) => {
-            child.setVelocityX(Math.max(--this.groundSpeed, -230));
-            child.setImmovable(true);
-        })
-
-    }
-    addTile(x, y) {
+          child.setVelocityX(Math.max(--this.groundSpeed, -230));
+          child.setImmovable(true);
+        });
+      }
+      addTile(x, y) {
         this.ground.create(x, y, "nuage1").setOrigin(0, 0);
+      }
     }
-}
-
 export default GameScene;
