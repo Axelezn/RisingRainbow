@@ -1,0 +1,97 @@
+{
+    "textures": [
+        {
+            "image": "dev/assets/sprites/rondoudou/2x/rondoudou(2)@2x.png",
+            "format": "RGBA8888",
+            "size": {
+                "w": 676,
+                "h": 2618
+            },
+            "scale": 1,
+            "animations": {
+                "dead": [
+                    {
+                        "filename": "Dead_01_rondoudou.png",
+                        "frame": { "x": 194, "y": 0, "w": 188, "h": 198 }
+                    },
+                    {
+                        "filename": "Dead_02_rondoudou.png",
+                        "frame": { "x": 388, "y": 0, "w": 188, "h": 198 }
+                    }
+                ],
+                "idle": [
+                    {
+                        "filename": "Idle_01_rondoudou.png",
+                        "frame": { "x": 100, "y": 0, "w": 188, "h": 198 }
+                    }
+                ],
+                "jump": [
+                    {
+                        "filename": "Jump_01_rondoudou.png",
+                        "frame": { "x": 35, "y": 744, "w": 188, "h": 198}
+                    },
+                    {
+                        "filename": "Jump_02_rondoudou.png",
+                        "frame": { "x": 225, "y": 569, "w": 188 , "h": 198 }
+                    },
+					{
+						"filename": "Jump_03_rondoudou.png",
+                        "frame": { "x": 406, "y": 743, "w": 188 , "h": 198 }}
+                ],
+                "run": [
+                    {
+                        "filename": "Run_01_rondoudou.png",
+                        "frame": { "x": 28, "y": 263, "w": 188, "h": 198 }
+                    },
+                    {
+                        "filename": "Run_02_rondoudou.png",
+                        "frame": { "x": 206, "y": 263, "w": 188, "h": 198 }
+                    },
+					{
+						"filename": "Run_03_rondoudou.png",
+						"frame": { "x": 375, "y": 263, "w": 188, "h": 198}
+					},
+					{
+						"filename": "Run_04_rondoudou.png",
+						"frame": { "x": 550, "y": 263, "w": 188, "h": 198}
+					}
+                ],
+				"run-évolution": [
+					{
+						"filename": "Run_EVO__grodoudou_01.png",
+						"frame" : { "x" : 4, "y": 1630, "w" : 130, "h": 225}
+					},
+					{
+						"filename" : "Run_EVO_grodoudou_02.png",
+						"frame": { "x" : 156, "y": 1630, "w" : 130, "h": 225}
+					},
+					{
+						"filename": "Run_EVO__grodoudou_03.png",
+						"frame": { "x" : 350, "y": 1630, "w" : 130, "h": 225} 
+					},
+					{
+						"filename": "Run_EVO__grodoudou_04.png",
+						"frame": { "x" : 544,  "y": 1630, "w" : 130, "h": 225}
+					}
+
+				],
+				"Jump_évolution": [
+					{
+						"filename": "Jump_EVO_grodoudou_01.png",
+						"frame" :{"x" : 13, "y": 2131, "w" : 130, "h": 225}
+					},
+					{
+						"filename": "Jump_EVO_grodoudou_02.png",
+						"frame" :{"x" : 184, "y" : 15514, "w" : 130, "h" : 417}
+					},
+					{
+						"filename": "Jump_EVO_grodoudou_03.png",
+						"frame" :{"x" : 344, "y": 2131, "w" : 130, "h" : 225}
+					}
+				]
+
+
+            }
+        }
+    ]
+}
