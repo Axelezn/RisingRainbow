@@ -33,7 +33,6 @@ class GameScene extends Phaser.Scene {
     this.player = this.physics.add.sprite(100, 450, 'dude');
     this.cameras.main.startFollow(this.player);
   }
-  *
   gameOver() {
     console.log("Game Over");
     this.scene.pause();

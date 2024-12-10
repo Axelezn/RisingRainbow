@@ -1,7 +1,7 @@
 class TitleScene extends Phaser.Scene {
     preload() {
-        this.tileWidth = 64 ;
-        this.tileHeight = 64;
+        this.tileWidth = 324 ;
+        this.tileHeight = 100;
         this.load.image('nuage1', "assets/parallaxes/Sol/sol_demon/1x/nuage_1.png");
     }
     create() {
