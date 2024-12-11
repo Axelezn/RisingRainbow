@@ -121,7 +121,10 @@ class GameScene extends Phaser.Scene {
     );
 
     spaceKey.on("down", (key, event) => {
-      if (this.player.body.touching.down) this.player.setVelocityY(-400);
+      if (this.player.body.touching.down) {
+        this.player.setVelocityY(-400);
+        this.speed2 = this.speed;
+      }
     });
 
     this.cameras.main.setBackgroundColor(0xbababa);
@@ -170,6 +173,9 @@ class GameScene extends Phaser.Scene {
   update() {
     if (this.player.body.touching.down) {
       this.player.setVelocityX(this.speed);
+    } else {
+      this.player.setVelocityX(this.speed2);
+      this.speed2 = Phaser.Math.ceil(this.speed2 / 2);
     }
     if (this.player.x >= this.game.config.width * (this.mult - 5)) {
       //fin du niveau
