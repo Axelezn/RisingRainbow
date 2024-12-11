@@ -128,13 +128,7 @@ class GameScene extends Phaser.Scene {
     this.speed2 = this.speed;
     this.physics.add.existing(this.ground, true);
     this.physics.add.collider(this.player, this.ground);
-    this.physics.add.collider(
-      this.player,
-      this.obstacle,
-      this.gameOver,
-      null,
-      this
-    );
+    this.physics.add.collider(this.player,this.obstacle,this.gameOver,null,this);
     this.physics.add.collider(this.ground, this.obstacle);
 
     const spaceKey = this.input.keyboard.addKey(
@@ -153,7 +147,6 @@ class GameScene extends Phaser.Scene {
     this.groupGame.add(this.parallax4);
     this.groupGame.add(this.player);
     this.groupGame.add(this.ground);
-    this.groupGame.add(this.obstacle);
 
     this.scoreText = this.add.text(600, 25, "SCORE:0", {
       fontSize: "28px",
@@ -174,9 +167,9 @@ class GameScene extends Phaser.Scene {
     this.groupText = this.add.group();
     this.groupText.add(this.scoreText);
     this.groupText.add(this.topScoreText);
-    const UICam = this.cameras.add(0, 0, this.game.width, this.game.height);
+    this.UICam = this.cameras.add(0, 0, this.game.width, this.game.height);
     this.cameras.main.ignore(this.groupText.getChildren());
-    UICam.ignore(this.groupGame.getChildren());
+    this.UICam.ignore(this.groupGame.getChildren());
     this.cameras.main.ignore(this.scoreText);
     this.cameras.main.ignore(this.topScoreText);
     this.handleScore();
@@ -193,36 +186,24 @@ class GameScene extends Phaser.Scene {
     this.scene.start("restart");
   }
   spawnObstacle() {
-    this.obstacle = this.physics.add.group();
     this.time.addEvent({
       delay: this.obstacleDelay,
       loop: true,
       callbaclScope: this,
       callback: () => {
-        let val = Math.random();
-        if (val > 0.5) {
-          this.generateObstacle(280);
-        } else {
-          this.generateObstacle(360);
-        }
-      },
-    });
-  }
-  generateObstacle(y) {
-    let obstacle = this.obstacle.create(
-      Math.max(Math.random() * 0.4, 0.4),
-      y,
-      "obstacle"
-    );
+        let obstacle = this.physics.add.sprite(100,650, "obstacle");
     obstacle.setScale(0.2).setOrigin(0,0);
-    obstacle.setVelocityX(Math.max(--this.speed, -400));
+    obstacle.setVelocityY(0);
     obstacle.setSize(obstacle.width * 2, obstacle.height * 2);
+    this.UICam.ignore(obstacle);
     this.time.addEvent({
       delay: 4000,
       repeat: 0,
       callbackScope: this,
       callback: () => {
         this.player.destroy();
+      },
+    });
       },
     });
   }
