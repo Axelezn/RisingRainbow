@@ -29,7 +29,7 @@
                     },
                     {
                         "filename": "Jump_demon_02.png",
-                        "frame": { "x": 114, "y": 119, "w": 91 , "h": 135 }
+                        "frame": { "x": 119, "y": 119, "w": 90 , "h": 83 }
                     },
 					{
 						"filename": "Jump_demon_03.png",
