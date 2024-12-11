@@ -179,7 +179,7 @@ class GameScene extends Phaser.Scene {
     } 
     else {
       this.player.setVelocityX(this.speed2);
-      if (this.newT-this.oldT>100) {
+      if (this.newT-this.oldT>500) {
         this.speed2 = (this.speed2 / 1.2);
         this.oldT=this.newT;
       }
