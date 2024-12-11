@@ -101,7 +101,7 @@ class GameScene extends Phaser.Scene {
     this.parallax2.setScrollFactor(0.444);
     this.parallax3.setScrollFactor(0.296);
     this.parallax4.setScrollFactor(0.197);
-    this.player = this.physics.add.sprite(100, 450, "dude");
+    this.player = this.physics.add.sprite(100, 650, "dude");
     this.cameras.main.startFollow(this.player, false, 1, 0.05, -300, 150);
     this.ground = this.add.tileSprite(
       0,
@@ -113,6 +113,7 @@ class GameScene extends Phaser.Scene {
     this.ground.setOrigin(0, 0);
     this.player.setBounce(0);
     this.player.setVelocityX(this.speed);
+    this.speed2=this.speed;
     this.physics.add.existing(this.ground, true);
     this.physics.add.collider(this.player, this.ground);
 
@@ -173,9 +174,10 @@ class GameScene extends Phaser.Scene {
   update() {
     if (this.player.body.touching.down) {
       this.player.setVelocityX(this.speed);
-    } else {
+    } 
+    else {
       this.player.setVelocityX(this.speed2);
-      this.speed2 = Phaser.Math.ceil(this.speed2 / 2);
+      this.speed2 = (this.speed2 / 1.2);
     }
     if (this.player.x >= this.game.config.width * (this.mult - 5)) {
       //fin du niveau
