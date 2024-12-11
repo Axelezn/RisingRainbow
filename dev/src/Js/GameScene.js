@@ -7,41 +7,47 @@ class GameScene extends Phaser.Scene {
     switch (this.level % 3) {
       case 1: // monde 1
         this.images = {
-          ground: "assets/parallaxes/Sol/Sol_demon/1x/Nuage_1.png",
-          parallax1: "assets/parallaxes/Sol/Sol_demon/1x/Nuage_2.png",
-          parallax2: "assets/parallaxes/Sol/Sol_demon/1x/Nuage_3.png",
-          parallax3: "assets/parallaxes/Sol/Sol_demon/1x/Nuage_4.png",
-          parallax4: "assets/parallaxes/Sol/Sol_demon/1x/Nuage_5.png",
+          ground: "assets/parallaxes/Sol/sol_demon/1x/Nuage_1.png",
+          parallax1: "assets/parallaxes/sol/Sol_demon/1x/Nuage_2.png",
+          parallax2: "assets/parallaxes/sol/Sol_demon/1x/Nuage_3.png",
+          parallax3: "assets/parallaxes/sol/Sol_demon/1x/Nuage_4.png",
+          parallax4: "assets/parallaxes/sol/Sol_demon/1x/Nuage_5.png",
+          obstacle: "assets/objects/obstacle_demon/obstacle_arc_en_ciel.png",
+          obstacle2:
+            "assets/objects/obstacle_demon/obstacle_demi_arc_en_ciel.png",
         };
         this.spritefile = "assets/dude.png";
-        this.cameras.main.setBackgroundColor(0x80FF80);
+        this.cameras.main.setBackgroundColor(0x80ff80);
 
         break;
       case 2: //monde 2
         this.images = {
-          ground: "assets/parallaxes/Sol/Sol_demon/1x/Nuage_1.png",
+          ground: "assets/parallaxes/Sol/Sol_berger/2x/decor_berger",
           parallax1: "assets/parallaxes/Sol/Sol_demon/1x/Nuage_2.png",
           parallax2: "assets/parallaxes/Sol/Sol_demon/1x/Nuage_3.png",
           parallax3: "assets/parallaxes/Sol/Sol_demon/1x/Nuage_4.png",
           parallax4: "assets/parallaxes/Sol/Sol_demon/1x/Nuage_5.png",
+          obstacle: "assets/objects/berger_obstacles/obstacle_berger.png",
         };
         this.spritefile = "assets/dude.png";
-        this.cameras.main.setBackgroundColor(0x8080FF);
+        this.cameras.main.setBackgroundColor(0x8080ff);
         break;
       case 0: //monde 3
         this.images = {
-          ground: "assets/parallaxes/Sol/Sol_demon/1x/Nuage_1.png",
+          ground: "assets/parallaxes/Sol/Sol_rondoudou/2x/decor_rondoudou.png",
           parallax1: "assets/parallaxes/Sol/Sol_demon/1x/Nuage_2.png",
           parallax2: "assets/parallaxes/Sol/Sol_demon/1x/Nuage_3.png",
           parallax3: "assets/parallaxes/Sol/Sol_demon/1x/Nuage_4.png",
           parallax4: "assets/parallaxes/Sol/Sol_demon/1x/Nuage_5.png",
+          obstacle: "assets/objects/rondoudou_obstacles/obstacle_rondoudou.png",
         };
         this.spritefile = "assets/dude.png";
-        this.cameras.main.setBackgroundColor(0xFF8080);
+        this.cameras.main.setBackgroundColor(0xff8080);
         break;
     }
     // calcul de la vitesse ne fonction du niveau
     this.speed = 160 * 1.2 ** this.level;
+    this.obstacleDelay = 3000;
   }
   // load assets
   preload() {
@@ -100,6 +106,7 @@ class GameScene extends Phaser.Scene {
       .setAlpha(0.8);
     this.parallax1.setOrigin(0, 0);
     this.parallax2.setOrigin(0, 0);
+    this.spawnObstacle();
     this.parallax3.setOrigin(0, 0);
     this.parallax4.setOrigin(0, 0);
     this.parallax1.setScrollFactor(0.667);
@@ -118,9 +125,17 @@ class GameScene extends Phaser.Scene {
     this.ground.setOrigin(0, 0);
     this.player.setBounce(0);
     this.player.setVelocityX(this.speed);
-    this.speed2=this.speed;
+    this.speed2 = this.speed;
     this.physics.add.existing(this.ground, true);
     this.physics.add.collider(this.player, this.ground);
+    this.physics.add.collider(
+      this.player,
+      this.obstacle,
+      this.gameOver,
+      null,
+      this
+    );
+    this.physics.add.collider(this.ground, this.obstacle);
 
     const spaceKey = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
@@ -138,6 +153,7 @@ class GameScene extends Phaser.Scene {
     this.groupGame.add(this.parallax4);
     this.groupGame.add(this.player);
     this.groupGame.add(this.ground);
+    this.groupGame.add(this.obstacle);
 
     this.scoreText = this.add.text(600, 25, "SCORE:0", {
       fontSize: "28px",
@@ -176,6 +192,40 @@ class GameScene extends Phaser.Scene {
     );
     this.scene.start("restart");
   }
+  spawnObstacle() {
+    this.obstacle = this.physics.add.group();
+    this.time.addEvent({
+      delay: this.obstacleDelay,
+      loop: true,
+      callbaclScope: this,
+      callback: () => {
+        let val = Math.random();
+        if (val > 0.5) {
+          this.generateObstacle(280);
+        } else {
+          this.generateObstacle(360);
+        }
+      },
+    });
+  }
+  generateObstacle(y) {
+    let obstacle = this.obstacle.create(
+      Math.max(Math.random() * 0.4, 0.4),
+      y,
+      "obstacle"
+    );
+    obstacle.setScale(0.2).setOrigin(0,0);
+    obstacle.setVelocityX(Math.max(--this.speed, -400));
+    obstacle.setSize(obstacle.width * 2, obstacle.height * 2);
+    this.time.addEvent({
+      delay: 4000,
+      repeat: 0,
+      callbackScope: this,
+      callback: () => {
+        this.player.destroy();
+      },
+    });
+  }
   handleScore() {
     this.time.addEvent({
       delay: 250,
@@ -191,16 +241,15 @@ class GameScene extends Phaser.Scene {
     });
   }
   update() {
-    this.newT=Date.now();
+    this.newT = Date.now();
     if (this.player.body.touching.down) {
       this.player.setVelocityX(this.speed);
-      this.oldT=this.newT;
-    } 
-    else {
+      this.oldT = this.newT;
+    } else {
       this.player.setVelocityX(this.speed2);
-      if (this.newT-this.oldT>500) {
-        this.speed2 = (this.speed2 / 1.2);
-        this.oldT=this.newT;
+      if (this.newT - this.oldT > 500) {
+        this.speed2 = this.speed2 / 1.2;
+        this.oldT = this.newT;
       }
     }
     if (this.player.x >= this.game.config.width * (this.mult - 5)) {
