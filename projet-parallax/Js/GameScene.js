@@ -140,12 +140,12 @@ class GameScene extends Phaser.Scene {
   }
 
   update() {
-    this.player.setVelocityX(this.speed);
+    this.player.setVelocityX(this.speed); 
     if (this.player.x >= this.game.config.width * (this.mult - 5)) {
       //fin du niveau
       this.scene.pause();
       this.level++;
-      this.scene.start("game", { level: this.level });
+      this.scene.start("game", { level: this.level , score : this.score});
     }
   }
 }

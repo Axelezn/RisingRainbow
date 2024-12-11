@@ -1,22 +1,23 @@
-import GameScene from './GameScene.js';
-import TitleScene from './TitleScene.js';
-import RestartScene from './RestartScene.js';
+import GameScene from "./GameScene.js";
+import TitleScene from "./TitleScene.js";
+import RestartScene from "./RestartScene.js";
 
 let config = {
-    width: 800,
-    height: 500,
-    backgroundColor: '450700',
-    type: Phaser.AUTO,
-    physics: {
-        default: "arcade",
-        arcade: {
-            gravity: {
-                y: 0
-            },
-            debug: false
-        }
-    }
-}
+  width: 1024,
+  height: 768,
+  backgroundColor: "450700",
+  type: Phaser.AUTO,
+  physics: {
+    default: "arcade",
+    arcade: {
+      gravity: {
+        y: 300,
+        x: -50,
+      },
+      debug: true,
+    },
+  },
+};
 const game = new Phaser.Game(config);
 
 game.scene.add("game", GameScene);
