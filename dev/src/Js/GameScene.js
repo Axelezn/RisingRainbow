@@ -172,12 +172,17 @@ class GameScene extends Phaser.Scene {
     });
   }
   update() {
+    this.newT=Date.now();
     if (this.player.body.touching.down) {
       this.player.setVelocityX(this.speed);
+      this.oldT=this.newT;
     } 
     else {
       this.player.setVelocityX(this.speed2);
-      this.speed2 = (this.speed2 / 1.2);
+      if (this.newT-this.oldT>100) {
+        this.speed2 = (this.speed2 / 1.2);
+        this.oldT=this.newT;
+      }
     }
     if (this.player.x >= this.game.config.width * (this.mult - 5)) {
       //fin du niveau
