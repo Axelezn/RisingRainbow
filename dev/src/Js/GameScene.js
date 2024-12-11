@@ -14,6 +14,8 @@ class GameScene extends Phaser.Scene {
           parallax4: "assets/parallaxes/Sol/Sol_demon/1x/Nuage_5.png",
         };
         this.spritefile = "assets/dude.png";
+        this.cameras.main.setBackgroundColor(0x80FF80);
+
         break;
       case 2: //monde 2
         this.images = {
@@ -24,6 +26,7 @@ class GameScene extends Phaser.Scene {
           parallax4: "assets/parallaxes/Sol/Sol_demon/1x/Nuage_5.png",
         };
         this.spritefile = "assets/dude.png";
+        this.cameras.main.setBackgroundColor(0x8080FF);
         break;
       case 0: //monde 3
         this.images = {
@@ -34,6 +37,7 @@ class GameScene extends Phaser.Scene {
           parallax4: "assets/parallaxes/Sol/Sol_demon/1x/Nuage_5.png",
         };
         this.spritefile = "assets/dude.png";
+        this.cameras.main.setBackgroundColor(0xFF8080);
         break;
     }
     // calcul de la vitesse ne fonction du niveau
@@ -53,6 +57,7 @@ class GameScene extends Phaser.Scene {
   }
   create() {
     this.mult = 10;
+    this.groupGame = this.add.group();
     this.parallax4 = this.add
       .tileSprite(
         -Phaser.Math.RND.integerInRange(100, this.game.config.width + 100),
@@ -127,8 +132,13 @@ class GameScene extends Phaser.Scene {
         this.speed2 = this.speed;
       }
     });
+    this.groupGame.add(this.parallax1);
+    this.groupGame.add(this.parallax2);
+    this.groupGame.add(this.parallax3);
+    this.groupGame.add(this.parallax4);
+    this.groupGame.add(this.player);
+    this.groupGame.add(this.ground);
 
-    this.cameras.main.setBackgroundColor(0xbababa);
     this.scoreText = this.add.text(600, 25, "SCORE:0", {
       fontSize: "28px",
       fontFamily: "Arial Black",
@@ -145,8 +155,17 @@ class GameScene extends Phaser.Scene {
       stroke: "gray",
       strokeThickness: 5,
     });
+    this.groupText = this.add.group();
+    this.groupText.add(this.scoreText);
+    this.groupText.add(this.topScoreText);
+    const UICam = this.cameras.add(0, 0, this.game.width, this.game.height);
+    this.cameras.main.ignore(this.groupText.getChildren());
+    UICam.ignore(this.groupGame.getChildren());
+    this.cameras.main.ignore(this.scoreText);
+    this.cameras.main.ignore(this.topScoreText);
     this.handleScore();
   }
+
   gameOver() {
     console.log("Game Over");
     this.scene.pause();
