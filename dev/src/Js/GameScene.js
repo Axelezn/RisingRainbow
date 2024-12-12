@@ -2,7 +2,10 @@
 class GameScene extends Phaser.Scene {
   init(data) {
     if (!data.level) data.level = 1;
+    if (!data.score) data.score = 0;
+    
     this.level = data.level;
+    this.score=data.score;
     console.log("level " + this.level);
     switch (this.level % 3) {
       case 1: // monde 1
@@ -49,6 +52,8 @@ class GameScene extends Phaser.Scene {
     this.speed = 160 * 1.2 ** this.level;
     this.obstacleDelay = 3000;
   }
+
+
   // load assets
   preload() {
     //load all images
@@ -61,6 +66,8 @@ class GameScene extends Phaser.Scene {
       frameHeight: 87,
     });
   }
+
+
   create() {
     this.mult = 10;
     this.groupGame = this.add.group();
@@ -146,14 +153,14 @@ class GameScene extends Phaser.Scene {
     this.time.addEvent({
       delay: 250,
       loop: true,
+      callbackScope: this,
       callback: () => {
         this.score++;
         this.scoreText.setText("SCORE: " + this.score);
         // if (this.score % 100 == 0) {
         //     this.sound.playAudioSprite("sfx", "ping");
         // }
-      },
-      callbackScope: this,
+      }
     });
   }
 
