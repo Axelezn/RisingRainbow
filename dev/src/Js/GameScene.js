@@ -50,7 +50,7 @@ class GameScene extends Phaser.Scene {
     }
     // calcul de la vitesse ne fonction du niveau
     this.speed = 160 * 1.2 ** this.level;
-    if (this.speed>1000) this.speed=1000;
+    if (this.speed>500) this.speed=500;
     this.obstacleDelay = 3000;
   }
 
