@@ -50,6 +50,7 @@ class GameScene extends Phaser.Scene {
     }
     // calcul de la vitesse ne fonction du niveau
     this.speed = 160 * 1.2 ** this.level;
+    if (this.speed>1000) this.speed=1000;
     this.obstacleDelay = 3000;
   }
 
@@ -59,7 +60,9 @@ class GameScene extends Phaser.Scene {
     //load all images
     for (const id in this.images) {
       const fichier = this.images[id];
+      this.textures.remove(id);
       this.load.image(id, fichier);
+      console.log(id+" -> "+fichier);
     }
     this.load.spritesheet("dude", this.spritefile, {
       frameWidth: 88,
@@ -77,7 +80,6 @@ class GameScene extends Phaser.Scene {
     this.parallax1 = this.add.tileSprite(-Phaser.Math.RND.integerInRange(100, this.game.config.width + 100), this.game.config.height - 150, this.game.config.width * this.mult, 280, "parallax1").setScale(0.5).setAlpha(0.8);
     this.parallax1.setOrigin(0, 0);
     this.parallax2.setOrigin(0, 0);
-    this.spawnObstacle();
     this.parallax3.setOrigin(0, 0);
     this.parallax4.setOrigin(0, 0);
     this.parallax1.setScrollFactor(0.667);
@@ -103,6 +105,17 @@ class GameScene extends Phaser.Scene {
         this.speed2 = this.speed;
       }
     });
+    const combo = this.input.keyboard.createCombo('GOD', { resetOnMatch: true });
+    this.input.keyboard.on('keycombomatch', event =>{
+      this.god=!this.god;
+      if (this.god) {
+          this.topScoreText.setText("GOD MODE");
+        }
+      else    
+        this.topScoreText.setText("MAX: " + this.topScore);
+
+    });
+
     this.groupGame.add(this.parallax1);
     this.groupGame.add(this.parallax2);
     this.groupGame.add(this.parallax3);
@@ -121,15 +134,18 @@ class GameScene extends Phaser.Scene {
     this.UICam.ignore(this.groupGame.getChildren());
     this.cameras.main.ignore(this.scoreText);
     this.cameras.main.ignore(this.topScoreText);
+    this.spawnObstacle();
     this.handleScore();
   }
 
   gameOver() {
-    console.log("Game Over");
-    this.scene.pause();
-    //this.sound.playAudioSprite("sfx", "shot");
-    localStorage.setItem("topScore", Math.max(localStorage.getItem("topScore"), this.score));
-    this.scene.start("restart");
+    if (!this.god) {
+      console.log("Game Over");
+      this.scene.pause();
+      //this.sound.playAudioSprite("sfx", "shot");
+      localStorage.setItem("topScore", Math.max(localStorage.getItem("topScore"), this.score));
+      this.scene.start("restart");
+    }
   }
 
   spawnObstacle() {
