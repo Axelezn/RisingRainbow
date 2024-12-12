@@ -64,46 +64,10 @@ class GameScene extends Phaser.Scene {
   create() {
     this.mult = 10;
     this.groupGame = this.add.group();
-    this.parallax4 = this.add
-      .tileSprite(
-        -Phaser.Math.RND.integerInRange(100, this.game.config.width + 100),
-        this.game.config.height - 700,
-        this.game.config.width * this.mult,
-        787,
-        "parallax4"
-      )
-      .setScale(0.5)
-      .setAlpha(0.8);
-    this.parallax3 = this.add
-      .tileSprite(
-        -Phaser.Math.RND.integerInRange(100, this.game.config.width + 100),
-        this.game.config.height - 450,
-        this.game.config.width * this.mult,
-        529,
-        "parallax3"
-      )
-      .setScale(0.5)
-      .setAlpha(0.8);
-    this.parallax2 = this.add
-      .tileSprite(
-        -Phaser.Math.RND.integerInRange(100, this.game.config.width + 100),
-        this.game.config.height - 300,
-        this.game.config.width * this.mult,
-        533,
-        "parallax2"
-      )
-      .setScale(0.5)
-      .setAlpha(0.8);
-    this.parallax1 = this.add
-      .tileSprite(
-        -Phaser.Math.RND.integerInRange(100, this.game.config.width + 100),
-        this.game.config.height - 150,
-        this.game.config.width * this.mult,
-        280,
-        "parallax1"
-      )
-      .setScale(0.5)
-      .setAlpha(0.8);
+    this.parallax4 = this.add.tileSprite(-Phaser.Math.RND.integerInRange(100, this.game.config.width + 100), this.game.config.height - 700, this.game.config.width * this.mult, 787, "parallax4").setScale(0.5).setAlpha(0.8);
+    this.parallax3 = this.add.tileSprite(-Phaser.Math.RND.integerInRange(100, this.game.config.width + 100), this.game.config.height - 450, this.game.config.width * this.mult, 529, "parallax3").setScale(0.5).setAlpha(0.8);
+    this.parallax2 = this.add.tileSprite(-Phaser.Math.RND.integerInRange(100, this.game.config.width + 100), this.game.config.height - 300, this.game.config.width * this.mult, 533, "parallax2").setScale(0.5).setAlpha(0.8);
+    this.parallax1 = this.add.tileSprite(-Phaser.Math.RND.integerInRange(100, this.game.config.width + 100), this.game.config.height - 150, this.game.config.width * this.mult, 280, "parallax1").setScale(0.5).setAlpha(0.8);
     this.parallax1.setOrigin(0, 0);
     this.parallax2.setOrigin(0, 0);
     this.spawnObstacle();
@@ -115,13 +79,7 @@ class GameScene extends Phaser.Scene {
     this.parallax4.setScrollFactor(0.197);
     this.player = this.physics.add.sprite(100, 650, "dude");
     this.cameras.main.startFollow(this.player, false, 1, 0.05, -300, 150);
-    this.ground = this.add.tileSprite(
-      0,
-      this.game.config.height + 50,
-      this.game.config.width * this.mult,
-      311,
-      "ground"
-    );
+    this.ground = this.add.tileSprite(0, this.game.config.height + 50, this.game.config.width * this.mult, 311, "ground");
     this.ground.setOrigin(0, 0);
     this.player.setBounce(0);
     this.player.setVelocityX(this.speed);
@@ -130,9 +88,7 @@ class GameScene extends Phaser.Scene {
     this.physics.add.collider(this.player, this.ground);
     this.physics.add.collider(this.ground, this.obstacle);
 
-    const spaceKey = this.input.keyboard.addKey(
-      Phaser.Input.Keyboard.KeyCodes.SPACE
-    );
+    const spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
     spaceKey.on("down", (key, event) => {
       if (this.player.body.touching.down) {
@@ -147,12 +103,7 @@ class GameScene extends Phaser.Scene {
     this.groupGame.add(this.player);
     this.groupGame.add(this.ground);
 
-    this.scoreText = this.add.text(600, 25, "SCORE:0", {
-      fontSize: "28px",
-      fontFamily: "Arial Black",
-      stroke: "gray",
-      strokeThickness: 5,
-    });
+    this.scoreText = this.add.text(600, 25, "SCORE:0", {fontSize: "28px", fontFamily: "Arial Black", stroke: "gray", strokeThickness: 5,});
     this.topScore = localStorage.getItem("topScore") == null ? 0 : localStorage.getItem("topScore");
     this.topScoreText = this.add.text(30, 25, "MAX: " + this.topScore, {fontSize: "28px", fontFamily: "Arial Black", stroke: "gray", strokeThickness: 5});
     this.groupText = this.add.group();
@@ -170,10 +121,7 @@ class GameScene extends Phaser.Scene {
     console.log("Game Over");
     this.scene.pause();
     //this.sound.playAudioSprite("sfx", "shot");
-    localStorage.setItem(
-      "topScore",
-      Math.max(localStorage.getItem("topScore"), this.score)
-    );
+    localStorage.setItem("topScore", Math.max(localStorage.getItem("topScore"), this.score));
     this.scene.start("restart");
   }
 
@@ -187,8 +135,9 @@ class GameScene extends Phaser.Scene {
         this.obstacle.setScale(0.2).setOrigin(0,0);
         this.obstacle.setVelocityY(0);
         this.UICam.ignore(this.obstacle);
-        this.physics.add.collider(this.player,this.obstacle, this.gameOver(), null, this)
         console.log(this.player.x+"  -  "+this.obstacle.x+"  [ "+this.game.config.width+" ]");
+        this.physics.add.collider(this.ground,this.obstacle);
+        this.physics.add.collider(this.player,this.obstacle, this.gameOver, null, this);
       }
     });
   }
