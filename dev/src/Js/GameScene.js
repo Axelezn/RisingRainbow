@@ -22,7 +22,7 @@ class GameScene extends Phaser.Scene {
         break;
       case 2: //monde 2
         this.images = {
-          ground: "assets/parallaxes/Sol/Sol_berger/2x/decor_berger",
+          ground: "assets/parallaxes/Sol/Sol_berger/2x/decor_berger.png",
           parallax1: "assets/parallaxes/Sol/Sol_demon/1x/Nuage_2.png",
           parallax2: "assets/parallaxes/Sol/Sol_demon/1x/Nuage_3.png",
           parallax3: "assets/parallaxes/Sol/Sol_demon/1x/Nuage_4.png",
@@ -128,7 +128,6 @@ class GameScene extends Phaser.Scene {
     this.speed2 = this.speed;
     this.physics.add.existing(this.ground, true);
     this.physics.add.collider(this.player, this.ground);
-    this.physics.add.collider(this.player,this.obstacle,this.gameOver,null,this);
     this.physics.add.collider(this.ground, this.obstacle);
 
     const spaceKey = this.input.keyboard.addKey(
@@ -184,11 +183,12 @@ class GameScene extends Phaser.Scene {
       loop: true,
       callbaclScope: this,
       callback: () => {
-        let obstacle = this.physics.add.sprite(this.player.x+this.game.config.width,300, "obstacle");
-        obstacle.setScale(0.2).setOrigin(0,0);
-        obstacle.setVelocityY(0);
-        this.UICam.ignore(obstacle);
-        console.log(this.player.x+"  -  "+obstacle.x+"  [ "+this.game.config.width+" ]");
+        this.obstacle = this.physics.add.sprite(this.player.x+this.game.config.width,300, "obstacle");
+        this.obstacle.setScale(0.2).setOrigin(0,0);
+        this.obstacle.setVelocityY(0);
+        this.UICam.ignore(this.obstacle);
+        this.physics.add.collider(this.player,this.obstacle, this.gameOver(), null, this)
+        console.log(this.player.x+"  -  "+this.obstacle.x+"  [ "+this.game.config.width+" ]");
       }
     });
   }
