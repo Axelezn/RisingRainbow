@@ -30,7 +30,7 @@ class GameScene extends Phaser.Scene {
           parallax2: "assets/parallaxes/Sol/Sol_demon/1x/Nuage_3.png",
           parallax3: "assets/parallaxes/Sol/Sol_demon/1x/Nuage_4.png",
           parallax4: "assets/parallaxes/Sol/Sol_demon/1x/Nuage_5.png",
-          obstacle: "assets/objects/berger_obstacles/obstacle_berger.png",
+          obstacle: "assets/objects/berger_obsatcles/obstacle_berger.png",
         };
         this.spritefile = "assets/dude.png";
         this.cameras.main.setBackgroundColor(0x8080ff);
