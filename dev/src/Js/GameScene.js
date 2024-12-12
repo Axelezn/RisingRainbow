@@ -154,16 +154,8 @@ class GameScene extends Phaser.Scene {
       stroke: "gray",
       strokeThickness: 5,
     });
-    this.topScore =
-      localStorage.getItem("topScore") == null
-        ? 0
-        : localStorage.getItem("topScore");
-    this.topScoreText = this.add.text(30, 25, "MAX: " + this.topScore, {
-      fontSize: "28px",
-      fontFamily: "Arial Black",
-      stroke: "gray",
-      strokeThickness: 5,
-    });
+    this.topScore = localStorage.getItem("topScore") == null ? 0 : localStorage.getItem("topScore");
+    this.topScoreText = this.add.text(30, 25, "MAX: " + this.topScore, {fontSize: "28px", fontFamily: "Arial Black", stroke: "gray", strokeThickness: 5});
     this.groupText = this.add.group();
     this.groupText.add(this.scoreText);
     this.groupText.add(this.topScoreText);
@@ -185,28 +177,22 @@ class GameScene extends Phaser.Scene {
     );
     this.scene.start("restart");
   }
+
   spawnObstacle() {
     this.time.addEvent({
       delay: this.obstacleDelay,
       loop: true,
       callbaclScope: this,
       callback: () => {
-        let obstacle = this.physics.add.sprite(100,650, "obstacle");
-    obstacle.setScale(0.2).setOrigin(0,0);
-    obstacle.setVelocityY(0);
-    obstacle.setSize(obstacle.width * 2, obstacle.height * 2);
-    this.UICam.ignore(obstacle);
-    this.time.addEvent({
-      delay: 4000,
-      repeat: 0,
-      callbackScope: this,
-      callback: () => {
-        this.player.destroy();
-      },
-    });
-      },
+        let obstacle = this.physics.add.sprite(this.player.x+this.game.config.width,300, "obstacle");
+        obstacle.setScale(0.2).setOrigin(0,0);
+        obstacle.setVelocityY(0);
+        this.UICam.ignore(obstacle);
+        console.log(this.player.x+"  -  "+obstacle.x+"  [ "+this.game.config.width+" ]");
+      }
     });
   }
+
   handleScore() {
     this.time.addEvent({
       delay: 250,
@@ -221,6 +207,7 @@ class GameScene extends Phaser.Scene {
       callbackScope: this,
     });
   }
+
   update() {
     this.newT = Date.now();
     if (this.player.body.touching.down) {
