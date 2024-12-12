@@ -1,7 +1,7 @@
 {
     "textures": [
         {
-            "image": "dev/assets/sprites/Skin_demon/1x/Sprite_sheet_sans_démarquation.png",
+            "image": "assets/sprites/Skin_demon/1x/Sprite_sheet_sans_demarquation.png",
             "format": "RGBA8888",
             "size": {
                 "w": 730,
