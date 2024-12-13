@@ -8,13 +8,13 @@ class RestartScene extends Phaser.Scene {
     }
     create() {
         // alert("Hello from Title");
-        const Title = this.add.text(400, 400, "RESTART GAME", {
+        const Title = this.add.text(400, 400, "REJOUER ", {
             fontSize: 45,
             fontFamily: "Arial Black",
             stroke: "gray",
             strokeThickness: 5
         })
-        const Score = this.add.text(400, 400, "Votre score est de : "+ this.score, {
+        const Score = this.add.text(400, 300 , "Votre score est de : "+ this.score, {
             fontSize: 45,
             fontFamily: "Arial Black",
             stroke: "gray",
