@@ -16,8 +16,7 @@ class GameScene extends Phaser.Scene {
           parallax3: "assets/parallaxes/sol/Sol_demon/1x/Nuage_4.png",
           parallax4: "assets/parallaxes/sol/Sol_demon/1x/Nuage_5.png",
           obstacle: "assets/objects/obstacle_demon/obstacle_arc_en_ciel.png",
-          obstacle2:
-            "assets/objects/obstacle_demon/obstacle_demi_arc_en_ciel.png",
+          background : "assets/backgrounds/background_demon/background_demon.png"
         };
         this.spritefile = "assets/dude.png";
         this.cameras.main.setBackgroundColor(0x80ff80);
@@ -31,6 +30,7 @@ class GameScene extends Phaser.Scene {
           parallax3: "assets/parallaxes/Sol/Sol_demon/1x/Nuage_4.png",
           parallax4: "assets/parallaxes/Sol/Sol_demon/1x/Nuage_5.png",
           obstacle: "assets/objects/berger_obsatcles/obstacle_berger.png",
+          background :'assets/backgrounds/background_berger/background_berger.png'
         };
         this.spritefile = "assets/dude.png";
         this.cameras.main.setBackgroundColor(0x8080ff);
@@ -43,6 +43,7 @@ class GameScene extends Phaser.Scene {
           parallax3: "assets/parallaxes/Sol/Sol_demon/1x/Nuage_4.png",
           parallax4: "assets/parallaxes/Sol/Sol_demon/1x/Nuage_5.png",
           obstacle: "assets/objects/rondoudou_obstacles/obstacle_rondoudou.png",
+          background : "assets/backgrounds/Background_rondoudou/2x/décors rondoudou@2x.png"
         };
         this.spritefile = "assets/dude.png";
         this.cameras.main.setBackgroundColor(0xff8080);
@@ -74,14 +75,22 @@ class GameScene extends Phaser.Scene {
   create() {
     this.mult = 10;
     this.groupGame = this.add.group();
+
+    this.UICam = this.cameras.add(0, 0, this.game.config.width, this.game.config.height);
+
+    // Créer un fond 
+    this.background = this.add.tileSprite(0, 0, this.game.config.width, this.game.config.height, "background").setOrigin(0, 0).setScrollFactor(0).setDepth(-1);
+    // Comme un mouvement de parallaxe mais un scrollfactor de 0 
     this.parallax4 = this.add.tileSprite(-Phaser.Math.RND.integerInRange(100, this.game.config.width + 100), this.game.config.height - 700, this.game.config.width * this.mult, 787, "parallax4").setScale(0.5).setAlpha(0.8);
     this.parallax3 = this.add.tileSprite(-Phaser.Math.RND.integerInRange(100, this.game.config.width + 100), this.game.config.height - 450, this.game.config.width * this.mult, 529, "parallax3").setScale(0.5).setAlpha(0.8);
     this.parallax2 = this.add.tileSprite(-Phaser.Math.RND.integerInRange(100, this.game.config.width + 100), this.game.config.height - 300, this.game.config.width * this.mult, 533, "parallax2").setScale(0.5).setAlpha(0.8);
     this.parallax1 = this.add.tileSprite(-Phaser.Math.RND.integerInRange(100, this.game.config.width + 100), this.game.config.height - 150, this.game.config.width * this.mult, 280, "parallax1").setScale(0.5).setAlpha(0.8);
+    this.background.setOrigin(0, 0)
     this.parallax1.setOrigin(0, 0);
     this.parallax2.setOrigin(0, 0);
     this.parallax3.setOrigin(0, 0);
     this.parallax4.setOrigin(0, 0);
+    this.background.setScrollFactor(0);
     this.parallax1.setScrollFactor(0.667);
     this.parallax2.setScrollFactor(0.444);
     this.parallax3.setScrollFactor(0.296);
@@ -114,8 +123,9 @@ class GameScene extends Phaser.Scene {
       else    
         this.topScoreText.setText("MAX: " + this.topScore);
 
-    });
-
+    })
+    ;
+    this.groupGame.add(this.background);
     this.groupGame.add(this.parallax1);
     this.groupGame.add(this.parallax2);
     this.groupGame.add(this.parallax3);
@@ -124,18 +134,24 @@ class GameScene extends Phaser.Scene {
     this.groupGame.add(this.ground);
 
     this.scoreText = this.add.text(600, 25, "SCORE:0", {fontSize: "28px", fontFamily: "Arial Black", stroke: "gray", strokeThickness: 5,});
-    this.topScore = localStorage.getItem("topScore") == null ? 0 : localStorage.getItem("topScore");
+    this.topScore = parseInt(localStorage.getItem("topScore"))> 0 ? localStorage.getItem("topScore") : 0;
+    console.log(localStorage.getItem("this.topScore"));
+
     this.topScoreText = this.add.text(30, 25, "MAX: " + this.topScore, {fontSize: "28px", fontFamily: "Arial Black", stroke: "gray", strokeThickness: 5});
     this.groupText = this.add.group();
     this.groupText.add(this.scoreText);
     this.groupText.add(this.topScoreText);
-    this.UICam = this.cameras.add(0, 0, this.game.width, this.game.height);
+    this.cameras.main.ignore(this.UICam);
     this.cameras.main.ignore(this.groupText.getChildren());
     this.UICam.ignore(this.groupGame.getChildren());
     this.cameras.main.ignore(this.scoreText);
     this.cameras.main.ignore(this.topScoreText);
     this.spawnObstacle();
     this.handleScore();
+    this.player.setDepth(2);
+this.ground.setDepth(1);
+this.scoreText.setDepth(3);
+this.topScoreText.setDepth(3);
   }
 
   gameOver() {
@@ -144,7 +160,7 @@ class GameScene extends Phaser.Scene {
       this.scene.pause();
       //this.sound.playAudioSprite("sfx", "shot");
       localStorage.setItem("topScore", Math.max(localStorage.getItem("topScore"), this.score));
-      this.scene.start("restart");
+      this.scene.start("restart", {score : this.score});
     }
   }
 
@@ -154,7 +170,7 @@ class GameScene extends Phaser.Scene {
       loop: true,
       callbaclScope: this,
       callback: () => {
-        this.obstacle = this.physics.add.sprite(this.player.x+this.game.config.width,300, "obstacle");
+        this.obstacle = this.physics.add.sprite(this.player.x+this.game.config.width + Phaser.Math.RND.integerInRange(-50,100),300, "obstacle");
         this.obstacle.setScale(0.2).setOrigin(0,0);
         this.obstacle.setVelocityY(0);
         this.UICam.ignore(this.obstacle);
